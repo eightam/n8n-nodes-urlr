@@ -91,7 +91,7 @@ export async function urlrApiRequest(
 		method,
 		url: `https://urlr.me/api/v1${endpoint}`,
 		headers: {
-			'Authorization': `Bearer ${accessToken}`,
+			Authorization: `Bearer ${accessToken}`,
 			'Content-Type': 'application/json',
 		},
 		qs,

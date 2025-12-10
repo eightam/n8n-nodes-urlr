@@ -112,21 +112,24 @@ export class Urlr implements INodeType {
 							delete body.expiresAt;
 						}
 						if (body.utmSource) {
-							body.utm_source = body.utmSource;
+							// UTM parameters need to be in a nested object
+							if (!body.utm) body.utm = {};
+							body.utm.source = body.utmSource;
 							delete body.utmSource;
 						}
 						if (body.utmMedium) {
-							body.utm_medium = body.utmMedium;
+							if (!body.utm) body.utm = {};
+							body.utm.medium = body.utmMedium;
 							delete body.utmMedium;
 						}
 						if (body.utmCampaign) {
-							body.utm_campaign = body.utmCampaign;
+							if (!body.utm) body.utm = {};
+							body.utm.campaign = body.utmCampaign;
 							delete body.utmCampaign;
 						}
 
 						const responseData = await urlrApiRequest.call(this, 'POST', '/links/create', body);
 						returnData.push({ json: responseData });
-
 					} else if (operation === 'edit') {
 						const linkId = this.getNodeParameter('linkId', i) as string;
 						const updateFields = this.getNodeParameter('updateFields', i, {}) as any;
@@ -145,12 +148,10 @@ export class Urlr implements INodeType {
 
 						const responseData = await urlrApiRequest.call(this, 'PATCH', `/links/${linkId}`, body);
 						returnData.push({ json: responseData });
-
 					} else if (operation === 'get') {
 						const linkId = this.getNodeParameter('linkId', i) as string;
 						const responseData = await urlrApiRequest.call(this, 'GET', `/links/${linkId}`);
 						returnData.push({ json: responseData });
-
 					} else if (operation === 'getMany') {
 						const returnAll = this.getNodeParameter('returnAll', i);
 						const filters = this.getNodeParameter('filters', i, {}) as any;
@@ -167,11 +168,12 @@ export class Urlr implements INodeType {
 							const limit = this.getNodeParameter('limit', i);
 							qs.limit = limit;
 							const responseData = await urlrApiRequest.call(this, 'GET', '/links', {}, qs);
-							const items = Array.isArray(responseData) ? responseData : responseData.data || [responseData];
+							const items = Array.isArray(responseData)
+								? responseData
+								: responseData.data || [responseData];
 							items.forEach((item: any) => returnData.push({ json: item }));
 						}
 					}
-
 				} else if (resource === 'qrCode') {
 					// QR Code operations
 					if (operation === 'create') {
@@ -192,7 +194,6 @@ export class Urlr implements INodeType {
 						const responseData = await urlrApiRequest.call(this, 'POST', '/qrcodes/create', body);
 						returnData.push({ json: responseData });
 					}
-
 				} else if (resource === 'statistics') {
 					// Statistics operations
 					if (operation === 'get') {
@@ -210,7 +211,6 @@ export class Urlr implements INodeType {
 						const responseData = await urlrApiRequest.call(this, 'POST', '/statistics', body);
 						returnData.push({ json: responseData });
 					}
-
 				} else if (resource === 'folder') {
 					// Folder operations
 					if (operation === 'create') {
@@ -231,14 +231,14 @@ export class Urlr implements INodeType {
 
 						const responseData = await urlrApiRequest.call(this, 'POST', '/folders/create', body);
 						returnData.push({ json: responseData });
-
 					} else if (operation === 'getMany') {
 						const teamId = this.getNodeParameter('teamId', i) as string;
 						const responseData = await urlrApiRequest.call(this, 'GET', `/folders/${teamId}`);
-						const items = Array.isArray(responseData) ? responseData : responseData.data || [responseData];
+						const items = Array.isArray(responseData)
+							? responseData
+							: responseData.data || [responseData];
 						items.forEach((item: any) => returnData.push({ json: item }));
 					}
-
 				} else if (resource === 'domain') {
 					// Domain operations
 					if (operation === 'create') {
@@ -254,7 +254,6 @@ export class Urlr implements INodeType {
 						returnData.push({ json: responseData });
 					}
 				}
-
 			} catch (error) {
 				if (this.continueOnFail()) {
 					const errorMessage = error instanceof Error ? error.message : String(error);
