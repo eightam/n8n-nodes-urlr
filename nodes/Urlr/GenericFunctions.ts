@@ -43,7 +43,7 @@ async function getAccessToken(
 
 	try {
 		const response = await this.helpers.httpRequest(options);
-		const accessToken = response.access_token || response.accessToken;
+		const accessToken = response.token || response.access_token || response.accessToken;
 
 		if (!accessToken) {
 			throw new NodeApiError(this.getNode(), {

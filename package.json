@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-urlr",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "n8n community node for URLR link shortener API - Create short links, QR codes, and access analytics",
 	"keywords": [
 		"n8n-community-node-package",
