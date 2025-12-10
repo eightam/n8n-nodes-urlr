@@ -1,5 +1,4 @@
 import {
-	IAuthenticateGeneric,
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
@@ -32,20 +31,19 @@ export class UrlrApi implements ICredentialType {
 		},
 	];
 
-	authenticate: IAuthenticateGeneric = {
-		type: 'generic',
-		properties: {
-			headers: {
-				'Authorization': '={{"Bearer " + $credentials.accessToken}}',
-			},
-		},
-	};
-
+	// Test credentials by attempting to get an access token
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://urlr.me/api/v1',
-			url: '/teams',
-			method: 'GET',
+			url: '/access_tokens/create',
+			method: 'POST',
+			body: {
+				username: '={{$credentials.email}}',
+				password: '={{$credentials.password}}',
+			},
+			headers: {
+				'Content-Type': 'application/json',
+			},
 		},
 	};
 }
