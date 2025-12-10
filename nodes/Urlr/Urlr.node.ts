@@ -3,7 +3,6 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	NodeOperationError,
 } from 'n8n-workflow';
 
 import { urlrApiRequest, urlrApiRequestAllItems } from './GenericFunctions';
@@ -77,6 +76,7 @@ export class Urlr implements INodeType {
 		],
 	};
 
+	// eslint-disable-next-line no-unused-vars
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];

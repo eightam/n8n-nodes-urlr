@@ -112,30 +112,26 @@ export async function urlrApiRequestAllItems(
 	const returnData: any[] = [];
 	let page = 1;
 	const limit = 100;
+	let hasMore = true;
 
-	let responseData;
-	do {
+	while (hasMore) {
 		qs.page = page;
 		qs.limit = limit;
-		responseData = await urlrApiRequest.call(this, method, endpoint, body, qs);
+		const responseData = await urlrApiRequest.call(this, method, endpoint, body, qs);
 
 		if (Array.isArray(responseData)) {
 			returnData.push(...responseData);
-			if (responseData.length < limit) {
-				break;
-			}
+			hasMore = responseData.length >= limit;
 		} else if (responseData.data && Array.isArray(responseData.data)) {
 			returnData.push(...responseData.data);
-			if (responseData.data.length < limit) {
-				break;
-			}
+			hasMore = responseData.data.length >= limit;
 		} else {
 			returnData.push(responseData);
-			break;
+			hasMore = false;
 		}
 
 		page++;
-	} while (true);
+	}
 
 	return returnData;
 }
