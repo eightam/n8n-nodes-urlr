@@ -48,7 +48,7 @@ async function getAccessToken(
 		if (!accessToken) {
 			throw new NodeApiError(this.getNode(), {
 				message: 'Failed to get access token from URLR API',
-				description: 'No access token in response',
+				description: `No access token in response. Response: ${JSON.stringify(response)}`,
 			} as JsonObject);
 		}
 
@@ -60,9 +60,16 @@ async function getAccessToken(
 
 		return accessToken;
 	} catch (error) {
+		// If it's already a NodeApiError from above, just rethrow it
+		if (error instanceof NodeApiError) {
+			throw error;
+		}
+
+		// Otherwise wrap the original error with more context
+		const errorMessage = error instanceof Error ? error.message : String(error);
 		throw new NodeApiError(this.getNode(), error as JsonObject, {
 			message: 'Failed to authenticate with URLR API',
-			description: 'Please check your email and password',
+			description: `Error: ${errorMessage}. Please check your email and password.`,
 		});
 	}
 }
