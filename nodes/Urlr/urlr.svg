@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#grad)"/>
+
+  <!-- Link chain icon -->
+  <g transform="translate(100, 100)">
+    <!-- Left link -->
+    <path d="M -45 -15 L -25 -15 C -18 -15 -15 -12 -15 -5 L -15 5 C -15 12 -18 15 -25 15 L -45 15 C -55 15 -60 10 -60 0 C -60 -10 -55 -15 -45 -15 Z"
+          fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Right link -->
+    <path d="M 45 -15 L 25 -15 C 18 -15 15 -12 15 -5 L 15 5 C 15 12 18 15 25 15 L 45 15 C 55 15 60 10 60 0 C 60 -10 55 -15 45 -15 Z"
+          fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Connecting line -->
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="white" stroke-width="8" stroke-linecap="round"/>
+  </g>
+</svg>

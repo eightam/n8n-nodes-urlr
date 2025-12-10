@@ -1,0 +1,63 @@
+{
+	"name": "n8n-nodes-urlr",
+	"version": "0.1.0",
+	"description": "n8n community node for URLR link shortener API - Create short links, QR codes, and access analytics",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"urlr",
+		"url-shortener",
+		"link-shortener",
+		"qr-code",
+		"analytics"
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/eightam/n8n-nodes-urlr",
+	"author": {
+		"name": "eightam",
+		"email": "tech@8am.ch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eightam/n8n-nodes-urlr.git"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"format": "prettier nodes credentials --write",
+		"lint": "eslint nodes credentials",
+		"lint:fix": "eslint nodes credentials --fix",
+		"prepublishOnly": "npm run build && npm run lint"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/UrlrApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Urlr/Urlr.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "^0.1.0",
+		"@types/node": "^22.0.0",
+		"@typescript-eslint/eslint-plugin": "^8.0.0",
+		"@typescript-eslint/parser": "^8.0.0",
+		"eslint": "^9.0.0",
+		"eslint-plugin-n8n-nodes-base": "^1.16.1",
+		"gulp": "^4.0.2",
+		"n8n-workflow": "^1.0.0",
+		"prettier": "^3.0.0",
+		"typescript": "^5.0.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	}
+}
